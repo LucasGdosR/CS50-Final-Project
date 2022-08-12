@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h3>Welcome to <b>Macros into Meal</b>!</h3>
+<h5><u>Instructions:</u></h5>
+<p>Choose which functionality you want:</p>
+<ul>Specifying exact macro targets for carbs, protein, and fats; OR</ul>
+<ul>Specifying minimum protein and fat targets, with an exact calorie target, and a preferred ingredient</ul>
+<p>Choose a database:</p>
+<ul>Default database (exported from <href a=''>[PLACEHOLDER]</href>); OR</ul>
+<ul>Custom foods provided by you.</ul>
+<p>Choose 3 ingredients, preferrably one rich in protein, one rich in fats, and one rich in carbohydrates. That's it!</p>
+<form action="/" method="post">
+    
+    <input type="radio" id="exact" name="exact/min" value="exact">
+    <label for="exact">Exact targets</label>
+    
+    <input type="radio" id="min" name="exact/min" value="min">
+    <label for="min">Minimum macros and calorie target</label>
+    
+    <input type="radio" id="db" name="db/custom" value="db">
+    <label for="db">Default database</label>
+    
+    <input type="radio" id="custom" name="db/custom" value="custom">
+    <label for="custom">Custom ingredients</label>
+    
+    <!-- This script shows fields only after the radios have been selected-->
+    <script>
+      
+        let targets = document.querySelector('exact/min');
+        targets.addEventListener('???', async function() {
+            if (targets == 'exact')
+                document.querySelector('macros').;
+            if (targets == 'min')
+                document.querySelector('calories').;
+        });
+
+        let database = document.querySelector('db/custom');
+        database.addEventListener('???', async function() {
+            if (database == 'db')
+                document.querySelector('sql').;
+            if (database == 'custom')
+                document.querySelector('nutritionfacts').;
+        })
+    </script>
+
+    <input type="sumbit" value="Turn macros into meal!">
+</form>
+</form>
+<h4>FAQ</h4>
+<h6>Why 3 ingredients?</h6>
+<p>Turning macros into meals is akin to solving linear systems. Since we have 3 targets, we need 3 variables to have an unique solution. If would not be possible to have a solution with only 2 ingredients, and there would be an infinite number of solutions with more than 3 ingredients.</p>
+<h6>Why have an ingredient rich in each macronutrient?</h6>
+<p>This is not required. However, it makes it more likely that it is possible to reach your macro targets. If your 3 ingredients are rice, potatoes and pasta, which are all carbohydrate rich foods, it likely won't be possible to reach protein or fat targets. Having an ingredient rich in each macronutrient makes it more likely that the macro targets are achievable with the selected ingredients.</p>
+<h6>Why minimum protein and fat targets and a fixed calorie target?</h6>
+<p>Protein and fats are essential nutrients, meaning they cannot be synthethized by the body, and must be ingested. A minimal intake of protein and fats is a necessity. Past that minimal threshold, counting only calories, regardless of the macronutrient, allows for greater flexibility. Choosing this option allows you to eat as much as possible of the food you want to eat the most of while still hitting your targets.</p>
+<h6>I want to use more than 3 ingredients!</h6>
+<p>There's a way around it. First come up with a recipe. Then, figure out the nutrition information from that recipe by adding up everything from all ingredients. Use that as a custom food. For example, if you want to eat homemade mac 'n' cheese, chicken breast, and apples. Decide which recipe you'll use for the mac 'n' cheese. Let's say it's 100g of pasta, 50g of american cheese, and 10g of butter. Add up the nutrition facts for all of those, [PLACEHOLDER]</p>
+{% endblock %}
