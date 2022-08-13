@@ -8,61 +8,57 @@
     // This function makes the inputs for macros visible once the 'exact' option has been selected
     function exactselected()
     {
-        document.querySelector('#carbs').type = document.querySelector('#protein').type = document.querySelector('#fats').type = "numbers";
-        document.querySelector('#carbs').placeholder = "Carbs";
-        document.querySelector('#protein').placeholder = "Protein";
-        document.querySelector('#fats').placeholder = "Fats";
+        document.querySelector('#carbs').type = document.querySelector('#protein').type = document.querySelector('#fats').type = "number";
         document.querySelector('#calories').type = "hidden";
         document.querySelector('#calories').value = "";
-        document.querySelector('#preferred').type = "hidden";
-        document.querySelector('#preferreddisclaimer').innerHTML = '';
-        exactormin = 0;
+        document.querySelector('#preferred').innerHTML = '';
+        exactormin = 1;
     }
     
     // This function makes the inputs for protein, fats, and calories visible once the 'min' option has been selected
-    // and possibly the preferred ingredient input
     function minselected()
     {
-        document.querySelector('#calories').type = document.querySelector('#protein').type = document.querySelector('#fats').type = "numbers";
-        document.querySelector('#calories').placeholder = "Calories";
-        document.querySelector('#protein').placeholder = "Protein";
-        document.querySelector('#fats').placeholder = "Fats";
+        document.querySelector('#calories').type = document.querySelector('#protein').type = document.querySelector('#fats').type = "number";
         document.querySelector('#carbs').type = "hidden";
         document.querySelector('#carbs').value = "";
-        exactormin = 1;
-        if (dborcustom == 1)
-            document.querySelector('#preferred').type = "text";
-            document.querySelector('#preferred').placeholder = "Type preferred ingredient";
-        if (dborcustom == 2)
-            document.querySelector('#preferreddisclaimer').innerHTML = 'Type in the ingredient you want to eat the most of in the leftmost field.';
+        exactormin = 2;
+        document.querySelector('#preferred').innerHTML = "Type in the ingredient you want to eat the most of in the <b><u>leftmost field</b></u>.";
     }
     
     // This function makes the inputs for ingredients visible once the 'db' option has been selected
-    // and possibly the preferred ingredient input
+    // and possibly the preferred ingredient input, if 'min' is selected
     function dbselected()
     {
-        document.querySelector('.db').type = "text";
-        document.querySelector('.db').placeholder = "Type an ingredient";
-        document.querySelector('.custom').type = "hidden";
-        document.querySelector('.custom').value = "";
+        let db = document.querySelectorAll('.db');
+        for (let i = 0; i < 3; i++)
+            {
+                db[i].type = "text";
+            }
+        let custom = document.querySelectorAll('.custom');
+        for (let i = 0; i < 12; i++)
+            {
+                custom[i].type = "hidden";
+                custom[i].value = '';
+            }
         dborcustom = 1;
-        if (exactormin == 1)
-            document.querySelector('#preferred').type = "text";
-            document.querySelector('#preferred').placeholder = "Type preferred ingredient";
     }
     
     // This function makes the inputs for custom ingredient macros visible once the 'custom' option has been selected
-    // and possibly turns the "preferreddisclaimer" on
+    // and possibly turns the preferred "disclaimer" on
     function customselected()
     {
-        document.querySelector('.custom').type = "number";
-        document.querySelector('.custom').placeholder = "Type numbers only";
-        document.querySelector('.db').type = "hidden";
-        document.querySelector('.db').value = "";
-        document.querySelector('#preferred').type = "hidden";
+        let custom = document.querySelectorAll('.custom');
+        for (let i = 0; i < 12; i++)
+        {
+            custom[i].type = 'number';
+        }
+        let db = document.querySelectorAll('.db')
+        for (let i=0; i < 3; i++)
+        {
+            db[i].type = "hidden";
+            db[i].value = "";
+        }
         dborcustom = 2;
-        if (exactormin == 1)
-            document.querySelector('#preferreddisclaimer').innerHTML = 'Type in which ingredient you want to eat the most of in the leftmost fields.';
     }
 
     function displaydb()
@@ -118,10 +114,10 @@
         <label for="min">Minimum macros and calorie target</label>
     </div>
     <div>
-        <input type="hidden" id="carbs">
-        <input type="hidden" id="calories">
-        <input type="hidden" id="protein">
-        <input type="hidden" id="fats">
+        <input type="hidden" id="carbs" placeholder="Carbs">
+        <input type="hidden" id="calories" placeholder="Calories">
+        <input type="hidden" id="protein"placeholder="Protein">
+        <input type="hidden" id="fats" placeholder="Fats">
     </div>
     <div>
         <input type="radio" id="dbradio" name="db/custom" value="db" onclick="dbselected()">
@@ -131,34 +127,35 @@
         <label for="custom">Custom ingredients</label>
     </div>
     <div>
-        <p id="preferreddisclaimer"></p>
-        
-        <input type="hidden" class="db" id="db1">
-        <input type="hidden" class="db" id="db2">
-        <input type="hidden" class="db" id="db3">
+        <p id="preferred"></p>
 
-        <input type="hidden" class="custom" id="weight1" placeholder="First ingredient's portion size in grams">
-        <input type="hidden" class="custom" id="weight2" placeholder="Second ingredient's portion size in grams">
-        <input type="hidden" class="custom" id="weight3" placeholder="Third ingredient's portion size in grams">
+        <input type="hidden" class="db" id="db1" placeholder="Preferred ingredient">
+        <input type="hidden" class="db" id="db2" placeholder="Type in ingredient">
+        <input type="hidden" class="db" id="db3" placeholder="Type in ingredient">
+
+        <input type="hidden" class="custom" id="weight1" placeholder="Portion size (grams)">
+        <input type="hidden" class="custom" id="weight2" placeholder="Portion size (grams)">
+        <input type="hidden" class="custom" id="weight3" placeholder="Portion size (grams)">
     </div>
     <div>
-        <input type="hidden" class="custom" id="carbs1" placeholder="First ingredient's carbs per portion in grams">
-        <input type="hidden" class="custom" id="carbs2" placeholder="Second ingredient's carbs per portion in grams">
-        <input type="hidden" class="custom" id="carbs3" placeholder="Third ingredient's carbs per portion in grams">
+        <input type="hidden" class="custom" id="carbs1" placeholder="Carbs per portion (g)">
+        <input type="hidden" class="custom" id="carbs2" placeholder="Carbs per portion (g)">
+        <input type="hidden" class="custom" id="carbs3" placeholder="Carbs per portion (g)">
     </div>
     <div>
-        <input type="hidden" class="custom" id="protein1" placeholder="First ingredient's protein per portion in grams">
-        <input type="hidden" class="custom" id="protein2" placeholder="Second ingredient's protein per portion in grams">
-        <input type="hidden" class="custom" id="protein3" placeholder="Third ingredient's protein per portion in grams">
+        <input type="hidden" class="custom" id="protein1" placeholder="Protein per portion (g)">
+        <input type="hidden" class="custom" id="protein2" placeholder="Protein per portion (g)">
+        <input type="hidden" class="custom" id="protein3" placeholder="Protein per portion (g)">
     </div>
-        <input type="hidden" class="custom" id="fats1" placeholder="First ingredient's fats per portion in grams">
-        <input type="hidden" class="custom" id="fats2" placeholder="Second ingredient's fats per portion in grams">
-        <input type="hidden" class="custom" id="fats3" placeholder="Third ingredient's fats per portion in grams">
+        <input type="hidden" class="custom" id="fats1" placeholder="Fats per portion (g)">
+        <input type="hidden" class="custom" id="fats2" placeholder="Fats per portion (g)">
+        <input type="hidden" class="custom" id="fats3" placeholder="Fats per portion (g)">
     </div>
 <!-- Faltando implementar o banco de dados, o campo pra comida preferida, os campos pra macros customizados-->
 <!-- e o aviso de que o primeiro ingrediente custom é o maximizado, caso não seja exato-->
-
-    <input type="submit" value="Turn macros into meal!">
+    <div>
+        <input type="submit" value="Turn macros into meal!">
+    </div>
 </form>
 
 <h4>FAQ</h4>
