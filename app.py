@@ -3,7 +3,7 @@ from flask import Flask, flash, render_template, request
 
 app = Flask(__name__)
 
-db = SQL("sqlite///nutritionfacts.db")
+#db = SQL("sqlite///nutritionfacts.db")
 
 
 @app.route("/", methods=['GET', 'POST'])

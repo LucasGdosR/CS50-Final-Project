@@ -1,52 +1,166 @@
 {% extends "layout.html" %}
 
 {% block main %}
+<script>
+    let exactormin = 0;
+    let dborcustom = 0;
+
+    // This function makes the inputs for macros visible once the 'exact' option has been selected
+    function exactselected()
+    {
+        document.querySelector('#carbs').type = document.querySelector('#protein').type = document.querySelector('#fats').type = "numbers";
+        document.querySelector('#carbs').placeholder = "Carbs";
+        document.querySelector('#protein').placeholder = "Protein";
+        document.querySelector('#fats').placeholder = "Fats";
+        document.querySelector('#calories').type = "hidden";
+        document.querySelector('#calories').value = "";
+        document.querySelector('#preferred').type = "hidden";
+        document.querySelector('#preferreddisclaimer').innerHTML = '';
+        exactormin = 0;
+    }
+    
+    // This function makes the inputs for protein, fats, and calories visible once the 'min' option has been selected
+    // and possibly the preferred ingredient input
+    function minselected()
+    {
+        document.querySelector('#calories').type = document.querySelector('#protein').type = document.querySelector('#fats').type = "numbers";
+        document.querySelector('#calories').placeholder = "Calories";
+        document.querySelector('#protein').placeholder = "Protein";
+        document.querySelector('#fats').placeholder = "Fats";
+        document.querySelector('#carbs').type = "hidden";
+        document.querySelector('#carbs').value = "";
+        exactormin = 1;
+        if (dborcustom == 1)
+            document.querySelector('#preferred').type = "text";
+            document.querySelector('#preferred').placeholder = "Type preferred ingredient";
+        if (dborcustom == 2)
+            document.querySelector('#preferreddisclaimer').innerHTML = 'Type in the ingredient you want to eat the most of in the leftmost field.';
+    }
+    
+    // This function makes the inputs for ingredients visible once the 'db' option has been selected
+    // and possibly the preferred ingredient input
+    function dbselected()
+    {
+        document.querySelector('.db').type = "text";
+        document.querySelector('.db').placeholder = "Type an ingredient";
+        document.querySelector('.custom').type = "hidden";
+        document.querySelector('.custom').value = "";
+        dborcustom = 1;
+        if (exactormin == 1)
+            document.querySelector('#preferred').type = "text";
+            document.querySelector('#preferred').placeholder = "Type preferred ingredient";
+    }
+    
+    // This function makes the inputs for custom ingredient macros visible once the 'custom' option has been selected
+    // and possibly turns the "preferreddisclaimer" on
+    function customselected()
+    {
+        document.querySelector('.custom').type = "number";
+        document.querySelector('.custom').placeholder = "Type numbers only";
+        document.querySelector('.db').type = "hidden";
+        document.querySelector('.db').value = "";
+        document.querySelector('#preferred').type = "hidden";
+        dborcustom = 2;
+        if (exactormin == 1)
+            document.querySelector('#preferreddisclaimer').innerHTML = 'Type in which ingredient you want to eat the most of in the leftmost fields.';
+    }
+
+    function displaydb()
+    {
+        TODO;
+    }
+// Tem que incluir um dicionário como esse "large.js", que salvei na pasta Documentos. Ele define WORDS, e eu colocaria o nome da comida
+//    <script src="large.js">< /script> 
+//    function autocompletedb()
+//    {
+//        let input = document.querySelector('#dbinput');
+//        input.addEventListener('keyup', function(event) {
+//            let html = '';
+//            if (input.value) {
+//                for (word of WORDS) {                         // Teria que mudar o WORDS de qualquer forma pro banco de dados
+//                    if (word.startsWith(input.value)) {
+//                        html += `<li>${word}</li>`;
+//                    }
+//                }
+//            }
+//            document.querySelector('ul').innerHTML = html;
+//        });
+//        ;
+//    }
+    
+    function displaycustom()
+    {
+        TODO;
+    }
+
+
+</script>
+
 <h3>Welcome to <b>Macros into Meal</b>!</h3>
 <h5><u>Instructions:</u></h5>
-<p>Choose which functionality you want:</p>
-<ul>Specifying exact macro targets for carbs, protein, and fats; OR</ul>
-<ul>Specifying minimum protein and fat targets, with an exact calorie target, and a preferred ingredient</ul>
-<p>Choose a database:</p>
-<ul>Default database (exported from <href a=''>[PLACEHOLDER]</href>); OR</ul>
-<ul>Custom foods provided by you.</ul>
-<p>Choose 3 ingredients, preferrably one rich in protein, one rich in fats, and one rich in carbohydrates. That's it!</p>
-<form action="/" method="post">
+<p class="">Choose which functionality you want:</p>
+<ul class="">
+    <li>Specifying exact macro targets for carbs, protein, and fats; OR</li>
+    <li>Specifying minimum protein and fat targets, with an exact calorie target, and a preferred ingredient.</li>
+</ul>
+<p class="">Choose a database:</p>
+<ul class="">
+    <li>Default database (exported from <a href=''>[PLACEHOLDER]</a>); OR</li>
+    <li>Custom foods provided by you.</li>
+</ul>
+<p class="">Choose 3 ingredients, preferrably one rich in protein, one rich in fats, and one rich in carbohydrates. That's it!</p>
+<form class="" action="/" method="post">
+    <div>
+        <input type="radio" id="exactradio" name="exact/min" value="exact" onclick="exactselected()">
+        <label for="exact">Exact targets</label>
     
-    <input type="radio" id="exact" name="exact/min" value="exact">
-    <label for="exact">Exact targets</label>
+        <input type="radio" id="minradio" name="exact/min" value="min" onclick="minselected()">
+        <label for="min">Minimum macros and calorie target</label>
+    </div>
+    <div>
+        <input type="hidden" id="carbs">
+        <input type="hidden" id="calories">
+        <input type="hidden" id="protein">
+        <input type="hidden" id="fats">
+    </div>
+    <div>
+        <input type="radio" id="dbradio" name="db/custom" value="db" onclick="dbselected()">
+        <label for="db">Default database</label>
     
-    <input type="radio" id="min" name="exact/min" value="min">
-    <label for="min">Minimum macros and calorie target</label>
-    
-    <input type="radio" id="db" name="db/custom" value="db">
-    <label for="db">Default database</label>
-    
-    <input type="radio" id="custom" name="db/custom" value="custom">
-    <label for="custom">Custom ingredients</label>
-    
-    <!-- This script shows fields only after the radios have been selected-->
-    <script>
-      
-        let targets = document.querySelector('exact/min');
-        targets.addEventListener('???', async function() {
-            if (targets == 'exact')
-                document.querySelector('macros').;
-            if (targets == 'min')
-                document.querySelector('calories').;
-        });
+        <input type="radio" id="customradio" name="db/custom" value="custom" onclick="customselected()">
+        <label for="custom">Custom ingredients</label>
+    </div>
+    <div>
+        <p id="preferreddisclaimer"></p>
+        
+        <input type="hidden" class="db" id="db1">
+        <input type="hidden" class="db" id="db2">
+        <input type="hidden" class="db" id="db3">
 
-        let database = document.querySelector('db/custom');
-        database.addEventListener('???', async function() {
-            if (database == 'db')
-                document.querySelector('sql').;
-            if (database == 'custom')
-                document.querySelector('nutritionfacts').;
-        })
-    </script>
+        <input type="hidden" class="custom" id="weight1" placeholder="First ingredient's portion size in grams">
+        <input type="hidden" class="custom" id="weight2" placeholder="Second ingredient's portion size in grams">
+        <input type="hidden" class="custom" id="weight3" placeholder="Third ingredient's portion size in grams">
+    </div>
+    <div>
+        <input type="hidden" class="custom" id="carbs1" placeholder="First ingredient's carbs per portion in grams">
+        <input type="hidden" class="custom" id="carbs2" placeholder="Second ingredient's carbs per portion in grams">
+        <input type="hidden" class="custom" id="carbs3" placeholder="Third ingredient's carbs per portion in grams">
+    </div>
+    <div>
+        <input type="hidden" class="custom" id="protein1" placeholder="First ingredient's protein per portion in grams">
+        <input type="hidden" class="custom" id="protein2" placeholder="Second ingredient's protein per portion in grams">
+        <input type="hidden" class="custom" id="protein3" placeholder="Third ingredient's protein per portion in grams">
+    </div>
+        <input type="hidden" class="custom" id="fats1" placeholder="First ingredient's fats per portion in grams">
+        <input type="hidden" class="custom" id="fats2" placeholder="Second ingredient's fats per portion in grams">
+        <input type="hidden" class="custom" id="fats3" placeholder="Third ingredient's fats per portion in grams">
+    </div>
+<!-- Faltando implementar o banco de dados, o campo pra comida preferida, os campos pra macros customizados-->
+<!-- e o aviso de que o primeiro ingrediente custom é o maximizado, caso não seja exato-->
 
-    <input type="sumbit" value="Turn macros into meal!">
+    <input type="submit" value="Turn macros into meal!">
 </form>
-</form>
+
 <h4>FAQ</h4>
 <h6>Why 3 ingredients?</h6>
 <p>Turning macros into meals is akin to solving linear systems. Since we have 3 targets, we need 3 variables to have an unique solution. If would not be possible to have a solution with only 2 ingredients, and there would be an infinite number of solutions with more than 3 ingredients.</p>
