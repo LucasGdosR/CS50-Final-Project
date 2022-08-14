@@ -2,8 +2,6 @@
 
 {% block main %}
 <script>
-    let exactormin = 0;
-    let dborcustom = 0;
 
     // This function makes the inputs for macros visible once the 'exact' option has been selected
     function exactselected()
@@ -12,7 +10,7 @@
         document.querySelector('#calories').type = "hidden";
         document.querySelector('#calories').value = "";
         document.querySelector('#preferred').innerHTML = '';
-        exactormin = 1;
+        document.querySelector('#exactminchoice').value = 'exact';
     }
     
     // This function makes the inputs for protein, fats, and calories visible once the 'min' option has been selected
@@ -21,12 +19,11 @@
         document.querySelector('#calories').type = document.querySelector('#protein').type = document.querySelector('#fats').type = "number";
         document.querySelector('#carbs').type = "hidden";
         document.querySelector('#carbs').value = "";
-        exactormin = 2;
+        document.querySelector('#exactminchoice').value = 'min';
         document.querySelector('#preferred').innerHTML = "Type in the ingredient you want to eat the most of in the <b><u>leftmost field</b></u>.";
     }
     
     // This function makes the inputs for ingredients visible once the 'db' option has been selected
-    // and possibly the preferred ingredient input, if 'min' is selected
     function dbselected()
     {
         let db = document.querySelectorAll('.db');
@@ -40,11 +37,10 @@
                 custom[i].type = "hidden";
                 custom[i].value = '';
             }
-        dborcustom = 1;
+        document.querySelector('#dbcustomchoice').value = 'db';
     }
     
     // This function makes the inputs for custom ingredient macros visible once the 'custom' option has been selected
-    // and possibly turns the preferred "disclaimer" on
     function customselected()
     {
         let custom = document.querySelectorAll('.custom');
@@ -58,7 +54,7 @@
             db[i].type = "hidden";
             db[i].value = "";
         }
-        dborcustom = 2;
+        document.querySelector('#dbcustomchoice').value = 'custom';
     }
 
     function displaydb()
@@ -84,12 +80,6 @@
 //        ;
 //    }
     
-    function displaycustom()
-    {
-        TODO;
-    }
-
-
 </script>
 
 <h3>Welcome to <b>Macros into Meal</b>!</h3>
@@ -106,6 +96,10 @@
 </ul>
 <p class="">Choose 3 ingredients, preferrably one rich in protein, one rich in fats, and one rich in carbohydrates. That's it!</p>
 <form class="" action="/" method="post">
+    <!--These inputs tell the backend which choices were made-->
+    <input type="hidden" id="exactminchoice" value="">
+    <input type="hidden" id="dbcustomchoice" value="">
+    
     <div>
         <input type="radio" id="exactradio" name="exact/min" value="exact" onclick="exactselected()">
         <label for="exact">Exact targets</label>
@@ -151,8 +145,7 @@
         <input type="hidden" class="custom" id="fats2" placeholder="Fats per portion (g)">
         <input type="hidden" class="custom" id="fats3" placeholder="Fats per portion (g)">
     </div>
-<!-- Faltando implementar o banco de dados, o campo pra comida preferida, os campos pra macros customizados-->
-<!-- e o aviso de que o primeiro ingrediente custom é o maximizado, caso não seja exato-->
+<!-- Faltando implementar o banco de dados-->
     <div>
         <input type="submit" value="Turn macros into meal!">
     </div>
