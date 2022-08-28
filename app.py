@@ -4,7 +4,7 @@ import numpy as np
 
 app = Flask(__name__)
 
-# db = SQL("sqlite///nutritionfacts.db")
+db = SQL("sqlite///nutritionfacts.db")
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -17,25 +17,25 @@ def index():
         ingredient1 = request.form.get('db1')
         ingredient2 = request.form.get('db2')
         ingredient3 = request.form.get('db3')
-#        macros1 = db.execute('SELECT carbs, protein, fats FROM nutritionfacts WHERE food == ?', ingredient1)
-#        macros2 = db.execute('SELECT carbs, protein, fats FROM nutritionfacts WHERE food == ?', ingredient2)
-#        macros3 = db.execute('SELECT carbs, protein, fats FROM nutritionfacts WHERE food == ?', ingredient3)
+        macros1 = db.execute('SELECT carbohydrate, protein, fat FROM nutritionfacts WHERE name == ?', ingredient1)
+        macros2 = db.execute('SELECT carbohydrate, protein, fat FROM nutritionfacts WHERE name == ?', ingredient2)
+        macros3 = db.execute('SELECT carbohydrate, protein, fat FROM nutritionfacts WHERE name == ?', ingredient3)
         carbs = int(request.form.get('carbs'))
         protein = int(request.form.get('protein'))
         fats = int(request.form.get('fats'))
         # carbs = a*m1.carbs + b*m2.carbs + c*m3 carbs
         # protein = a*m1.protein + b*m2.protein + c*m3 protein
         # fats = a*m1.fats + b*m2.fats + c*m3 fats
-#        A = np.matrix([[macros1['carbs'],macros2['carbs'],macros3['carbs']],
-#                       [macros1['protein'],macros2['protein'],macros3['protein']],
-#                       [macros1['fats'],macros2['fats'],macros3['fats']]])
-#        B = np.matrix([[carbs],[protein],[fats]])
-#        A_inverse = np.linalg.inv(A)
-#        X = A_inverse * B
-#        for i in X:
-#            if X[i] < 0:
-#                return('negative.html')
-#            X[i] = round(X[i] * 100)
+        A = np.matrix([[macros1['carbohydrate'],macros2['carbohydrate'],macros3['carbohydrate']],
+                       [macros1['protein'],macros2['protein'],macros3['protein']],
+                       [macros1['fat'],macros2['fat'],macros3['fat']]])
+        B = np.matrix([[carbs],[protein],[fats]])
+        A_inverse = np.linalg.inv(A)
+        X = A_inverse * B
+        for i in X:
+            if X[i] < 0:
+                return('negative.html')
+            X[i] = round(X[i] * 100)
         return render_template('dbexact.html', X)
     elif request.form.get('exactminchoice') == 'min' and request.form.get('dbcustomchoice') == 'db':
         ingredient1 = request.form.get('db1')
