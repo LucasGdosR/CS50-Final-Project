@@ -1,3 +1,4 @@
-cs50
 Flask
+numpy
 requests
+sqlite3
