@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+
+{% block main %}
+To meet your specified macros ({{ carbstarget }}g carbs, {{ proteintarget }}g protein, {{ fatstarget }}g fats) you need to eat {{ X[0] }}g of {{ ingredient1 }}, {{ X[1] }}g of {{ ingredient2 }}, and {{ X[2] }}g of {{ ingredient3 }}.
+<button method="post" type="submit" id="return" name="return">
+{% endblock %}
