@@ -10,6 +10,7 @@
         document.querySelector('#calories').type = "hidden";
         document.querySelector('#calories').value = "";
         document.querySelector('#preferred').innerHTML = '';
+        document.querySelector('#db1').placeholder = 'Type in ingredient';
         document.querySelector('#exactminchoice').value = 'exact';
     }
     
@@ -21,6 +22,7 @@
         document.querySelector('#carbs').value = "";
         document.querySelector('#exactminchoice').value = 'min';
         document.querySelector('#preferred').innerHTML = "Type in the ingredient you want to eat the most of in the <b><u>leftmost field</b></u>.";
+        document.querySelector('#db1').placeholder = "Preferred ingredient";
     }
     
     // This function makes the inputs for ingredients visible once the 'db' option has been selected
@@ -91,7 +93,7 @@
 </ul>
 <p class="">Choose a database:</p>
 <ul class="">
-    <li>Default database (exported from <a href=''>[PLACEHOLDER]</a>); OR</li>
+    <li>Default database (exported from <a href='https://www.kaggle.com/datasets/trolukovich/nutritional-values-for-common-foods-and-products'>kaggle</a>); OR</li>
     <li>Custom foods provided by you.</li>
 </ul>
 <p class="">Choose 3 ingredients, preferrably one rich in protein, one rich in fats, and one rich in carbohydrates. That's it!</p>
@@ -123,7 +125,7 @@
     <div>
         <p id="preferred"></p>
 
-        <input type="hidden" class="db" id="db1" name="db1" placeholder="Preferred ingredient">
+        <input type="hidden" class="db" id="db1" name="db1">
         <input type="hidden" class="db" id="db2" name="db2" placeholder="Type in ingredient">
         <input type="hidden" class="db" id="db3" name="db3" placeholder="Type in ingredient">
 
