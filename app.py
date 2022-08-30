@@ -1,4 +1,3 @@
-from ast import Return
 from flask import Flask, flash, render_template, request
 import numpy as np
 from scipy.optimize import linprog
@@ -18,7 +17,6 @@ def index():
 
     # Use a multiple options input to determine which page to render next
     # Exact macros using database
-    # DONE
     elif request.form.get('exactminchoice') == 'exact' and request.form.get('dbcustomchoice') == 'db':
         ingredient1 = request.form.get('db1')
         ingredient2 = request.form.get('db2')
@@ -62,7 +60,7 @@ def index():
         proteintarget = int(request.form.get('protein'))
         fatstarget = int(request.form.get('fats'))
         # https://stackoverflow.com/questions/48966934/solve-a-system-of-linear-equations-and-linear-inequalities
-        # P >= PT, F >= FT, kcal = kcalT, pesos >= 0, peso1 max
+        # P >= PT, F >= FT, kcal = kcalT, weights >= 0, weight1 max
         coefficients_inequalities = [[-float(macros1[0][1]), -float(macros2[0][1]), -float(macros3[0][1])], [-float(macros1[0][2]), -float(macros2[0][2]), -float(macros3[0][2])]]  # require -1*x + -1*y <= -180
         constants_inequalities = [-proteintarget, -fatstarget]
         coefficients_equalities = [[float(macros1[0][0]), float(macros2[0][0]), float(macros3[0][0])]]
@@ -72,15 +70,12 @@ def index():
               A_ub=coefficients_inequalities,
               b_ub=constants_inequalities,
               A_eq=coefficients_equalities,
-              b_eq=constants_equalities, # bounds=((0, None), (0, None), (0, None))
-        )
-        #print('Maximum value of y =', -res.fun)  # opposite of value of -y
+              b_eq=constants_equalities)
         if res.success == False:
             return render_template('negative.html')
         return render_template('dbmin.html', weight1=round(res.x[0] * 100), weight2=round(res.x[1] * 100), weight3=round(res.x[2] * 100), caloriestarget=caloriestarget, proteintarget=proteintarget, fatstarget=fatstarget, ingredient1=ingredient1, ingredient2=ingredient2, ingredient3=ingredient3)
     
     # Exact macros with custom foods
-    # DONE
     elif request.form.get('exactminchoice') == 'exact' and request.form.get('dbcustomchoice') == 'custom':
         weight = [int(request.form.get('weight1')), int(request.form.get('weight2')), int(request.form.get('weight3'))] 
         carbs = [int(request.form.get('carbs1')), int(request.form.get('carbs2')), int(request.form.get('carbs3'))]
@@ -104,7 +99,26 @@ def index():
     
     # Calorie target with custom foods
     elif request.form.get('exactminchoice') == 'min' and request.form.get('dbcustomchoice') == 'custom':
-        return render_template('custommin.html')
+        weight = [int(request.form.get('weight1')), int(request.form.get('weight2')), int(request.form.get('weight3'))] 
+        calories = [int(request.form.get('carbs1')), int(request.form.get('carbs2')), int(request.form.get('carbs3'))]
+        protein = [int(request.form.get('protein1')), int(request.form.get('protein2')), int(request.form.get('protein3'))]
+        fats = [int(request.form.get('fats1')), int(request.form.get('fats2')), int(request.form.get('fats3'))]
+        caloriestarget = int(request.form.get('calories'))
+        proteintarget = int(request.form.get('protein'))
+        fatstarget = int(request.form.get('fats'))
+        coefficients_inequalities = [[-protein[0], -protein[1], -protein[2]], [-fats[0], -fats[1], -fats[2]]]
+        constants_inequalities = [-proteintarget, -fatstarget]
+        coefficients_equalities = [calories]
+        constants_equalities = [caloriestarget]
+        coefficients_max_1 = [-1, 0, 0]
+        res = linprog(coefficients_max_1,
+              A_ub=coefficients_inequalities,
+              b_ub=constants_inequalities,
+              A_eq=coefficients_equalities,
+              b_eq=constants_equalities)
+        if res.success == False:
+            return render_template('negative.html')
+        return render_template('custommin.html', weight1=round(res.x[0] * weight[0]), weight2=round(res.x[1] * weight[1]), weight3=round(res.x[2] * weight[2]), caloriestarget=caloriestarget, proteintarget=proteintarget, fatstarget=fatstarget)
 
     # If the options aren't selected
     else:

@@ -12,6 +12,12 @@
         document.querySelector('#preferred').innerHTML = '';
         document.querySelector('#db1').placeholder = 'Type in ingredient';
         document.querySelector('#exactminchoice').value = 'exact';
+        if (document.querySelector('#dbcustomchoice').value = 'custom')
+        {
+            document.querySelector('#carbs1').placeholder = 'Carbs per portion (g)';
+            document.querySelector('#carbs2').placeholder = 'Carbs per portion (g)';
+            document.querySelector('#carbs3').placeholder = 'Carbs per portion (g)';
+        }
     }
     
     // This function makes the inputs for protein, fats, and calories visible once the 'min' option has been selected
@@ -23,6 +29,12 @@
         document.querySelector('#exactminchoice').value = 'min';
         document.querySelector('#preferred').innerHTML = "Type in the ingredient you want to eat the most of in the <b><u>leftmost field</b></u>.";
         document.querySelector('#db1').placeholder = "Preferred ingredient";
+        if (document.querySelector('#dbcustomchoice').value = 'custom')
+        {
+            document.querySelector('#carbs1').placeholder = 'kcal per portion';
+            document.querySelector('#carbs2').placeholder = 'kcal per portion';
+            document.querySelector('#carbs3').placeholder = 'kcal per portion';
+        }
     }
     
     // This function makes the inputs for ingredients visible once the 'db' option has been selected
@@ -57,6 +69,18 @@
             db[i].value = "";
         }
         document.querySelector('#dbcustomchoice').value = 'custom';
+        if (document.querySelector('#exactminchoice').value = 'min')
+        {
+            document.querySelector('#carbs1').placeholder = 'kcal per portion';
+            document.querySelector('#carbs2').placeholder = 'kcal per portion';
+            document.querySelector('#carbs3').placeholder = 'kcal per portion';
+        }
+        else if (document.querySelector('#exactminchoice').value = 'exact')
+        {
+            document.querySelector('#carbs1').placeholder = 'Carbs per portion (g)';
+            document.querySelector('#carbs2').placeholder = 'Carbs per portion (g)';
+            document.querySelector('#carbs3').placeholder = 'Carbs per portion (g)';
+        }
     }
 
     function displaydb()
