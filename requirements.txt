@@ -1,4 +1,4 @@
-Flask
+flask
 numpy
-requests
+scipy
 sqlite3
