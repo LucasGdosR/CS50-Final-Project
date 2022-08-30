@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+
+{% block main %}
+To meet your specified targets ({{ caloriestarget }}kcal, minimum {{ proteintarget }}g protein, minimum {{ fatstarget }}g fats) you need to eat {{ weight1 }}g of {{ ingredient1 }}, {{ weight2 }}g of {{ ingredient2 }}, and {{ weight3 }}g of {{ ingredient3 }}.
+<button method="post" type="submit" id="return" name="return">
+{% endblock %}
