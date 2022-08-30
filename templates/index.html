@@ -64,7 +64,7 @@
         TODO;
     }
 </script>
-<script src="foods.js"></script>
+<script src="/static/foods.js"></script>
 <!-- Essa é a função de autocompletar a classe foods. Tenho que criar três botôes dessa classe pros casos de usar o banco de dados.-->    
 
 
@@ -77,7 +77,7 @@
 </ul>
 <p class="">Choose a database:</p>
 <ul class="">
-    <li>Default database (exported from <a href='https://www.kaggle.com/datasets/trolukovich/nutritional-values-for-common-foods-and-products'>kaggle</a>); OR</li>
+    <li>Default database TACO (exported from <a href='https://www.kaggle.com/datasets/ispangler/composio-nutricional-de-alimentos-taco?resource=download&select=taco-db-nutrientes.csv'>kaggle</a>); OR</li>
     <li>Custom foods provided by you.</li>
 </ul>
 <p class="">Choose 3 ingredients, preferrably one rich in protein, one rich in fats, and one rich in carbohydrates. That's it!</p>
@@ -94,10 +94,10 @@
         <label for="min">Minimum macros and calorie target</label>
     </div>
     <div>
-        <input type="hidden" id="carbs" name="carbs" placeholder="Carbs">
-        <input type="hidden" id="calories" name="calories" placeholder="Calories">
-        <input type="hidden" id="protein" name="protein" placeholder="Protein">
-        <input type="hidden" id="fats" name="fats" placeholder="Fats">
+        <input type="hidden" id="carbs" name="carbs" placeholder="Carbs" autocomplete="off">
+        <input type="hidden" id="calories" name="calories" placeholder="Calories" autocomplete="off">
+        <input type="hidden" id="protein" name="protein" placeholder="Protein" autocomplete="off">
+        <input type="hidden" id="fats" name="fats" placeholder="Fats" autocomplete="off">
     </div>
     <div>
         <input type="radio" id="dbradio" name="db/custom" value="db" onclick="dbselected()">
@@ -109,29 +109,28 @@
     <div>
         <p id="preferred"></p>
 
-        <input type="hidden" class="db" id="db1" name="db1">
-        <input type="hidden" class="db" id="db2" name="db2" placeholder="Type in ingredient">
-        <input type="hidden" class="db" id="db3" name="db3" placeholder="Type in ingredient">
+        <input type="hidden" class="db" id="db1" name="db1" autocomplete="off">
+        <input type="hidden" class="db" id="db2" name="db2" placeholder="Type in ingredient" autocomplete="off">
+        <input type="hidden" class="db" id="db3" name="db3" placeholder="Type in ingredient" autocomplete="off">
 
-        <input type="hidden" class="custom" id="weight1" name="weight1" placeholder="Portion size (grams)">
-        <input type="hidden" class="custom" id="weight2" name="weight2" placeholder="Portion size (grams)">
-        <input type="hidden" class="custom" id="weight3" name="weight3" placeholder="Portion size (grams)">
+        <input type="hidden" class="custom" id="weight1" name="weight1" placeholder="Portion size (grams)" autocomplete="off">
+        <input type="hidden" class="custom" id="weight2" name="weight2" placeholder="Portion size (grams)" autocomplete="off">
+        <input type="hidden" class="custom" id="weight3" name="weight3" placeholder="Portion size (grams)" autocomplete="off">
     </div>
     <div>
-        <input type="hidden" class="custom" id="carbs1" name="carbs1" placeholder="Carbs per portion (g)">
-        <input type="hidden" class="custom" id="carbs2" name="carbs2" placeholder="Carbs per portion (g)">
-        <input type="hidden" class="custom" id="carbs3" name="carbs3" placeholder="Carbs per portion (g)">
+        <input type="hidden" class="custom" id="carbs1" name="carbs1" placeholder="Carbs per portion (g)" autocomplete="off">
+        <input type="hidden" class="custom" id="carbs2" name="carbs2" placeholder="Carbs per portion (g)" autocomplete="off">
+        <input type="hidden" class="custom" id="carbs3" name="carbs3" placeholder="Carbs per portion (g)" autocomplete="off">
     </div>
     <div>
-        <input type="hidden" class="custom" id="protein1" name="protein1" placeholder="Protein per portion (g)">
-        <input type="hidden" class="custom" id="protein2" name="protein2" placeholder="Protein per portion (g)">
-        <input type="hidden" class="custom" id="protein3" name="protein3" placeholder="Protein per portion (g)">
+        <input type="hidden" class="custom" id="protein1" name="protein1" placeholder="Protein per portion (g)" autocomplete="off">
+        <input type="hidden" class="custom" id="protein2" name="protein2" placeholder="Protein per portion (g)" autocomplete="off">
+        <input type="hidden" class="custom" id="protein3" name="protein3" placeholder="Protein per portion (g)" autocomplete="off">
     </div>
-        <input type="hidden" class="custom" id="fats1" name="fats1" placeholder="Fats per portion (g)">
-        <input type="hidden" class="custom" id="fats2" name="fats2" placeholder="Fats per portion (g)">
-        <input type="hidden" class="custom" id="fats3" name="fats3" placeholder="Fats per portion (g)">
+        <input type="hidden" class="custom" id="fats1" name="fats1" placeholder="Fats per portion (g)" autocomplete="off">
+        <input type="hidden" class="custom" id="fats2" name="fats2" placeholder="Fats per portion (g)" autocomplete="off">
+        <input type="hidden" class="custom" id="fats3" name="fats3" placeholder="Fats per portion (g)" autocomplete="off">
     </div>
-<!-- Faltando implementar o banco de dados-->
     <div>
         <input type="submit" value="Turn macros into meal!">
     </div>

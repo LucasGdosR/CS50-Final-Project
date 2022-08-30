@@ -4,7 +4,7 @@ import sqlite3
 
 app = Flask(__name__)
 
-con = sqlite3.connect("nutritionfacts.db", check_same_thread=False)
+con = sqlite3.connect("taco.db", check_same_thread=False)
 cur = con.cursor()
 
 
@@ -18,11 +18,11 @@ def index():
         ingredient1 = request.form.get('db1')
         ingredient2 = request.form.get('db2')
         ingredient3 = request.form.get('db3')
-        res = cur.execute('SELECT carbohydrate, protein, fat FROM nutritionfacts WHERE name = ?', (ingredient1,))
+        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name = ?', (ingredient1,))
         macros1 = res.fetchall()
-        res = cur.execute('SELECT carbohydrate, protein, fat FROM nutritionfacts WHERE name = ?', (ingredient2,))
+        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name = ?', (ingredient2,))
         macros2 = res.fetchall()
-        res = cur.execute('SELECT carbohydrate, protein, fat FROM nutritionfacts WHERE name = ?', (ingredient3,))
+        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name = ?', (ingredient3,))
         macros3 = res.fetchall()
         carbstarget = int(request.form.get('carbs'))
         proteintarget = int(request.form.get('protein'))
