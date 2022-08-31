@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block main %}
-To meet your specified targets ({{ caloriestarget }}kcal, {{ proteintarget }}g protein, {{ fatstarget }}g fats) you need to eat {{ weight1 }}g of the first ingredient, {{ weight2 }}g of the second ingredient, and {{ weight3 }}g of the third ingredient.
-<button method="post" type="submit" id="return" name="return">
+<p style="color:white;">Para atingir alvos ({{ caloriestarget }}kcal, mínimo de {{ proteintarget }}g de proteína, mínimo de {{ fatstarget }}g de gordura) você precisa ingerir {{ weight1 }}g do primeiro alimento, {{ weight2 }}g do segundo alimento, e {{ weight3 }}g do terceiro alimento.</p>
+<form action ="/" method="post">
+    <input type="submit" id="return" name="return" value="Voltar">
+</form>
 {% endblock %}

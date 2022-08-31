@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block main %}
-To meet your specified targets ({{ caloriestarget }}kcal, minimum {{ proteintarget }}g protein, minimum {{ fatstarget }}g fats) you need to eat {{ weight1 }}g of {{ ingredient1 }}, {{ weight2 }}g of {{ ingredient2 }}, and {{ weight3 }}g of {{ ingredient3 }}.
-<button method="post" type="submit" id="return" name="return">
+<p style="color:white;">Para atingir alvos ({{ caloriestarget }}kcal, mínimo de {{ proteintarget }}g de proteína, mínimo de {{ fatstarget }}g de gordura) você precisa ingerir {{ weight1 }}g de {{ ingredient1 }}, {{ weight2 }}g de {{ ingredient2 }}, e {{ weight3 }}g de {{ ingredient3 }}.</p>
+<form action ="/" method="post">
+    <input type="submit" id="return" name="return" value="Voltar">
+</form>
 {% endblock %}
