@@ -12,7 +12,7 @@
         document.querySelector('#preferred').innerHTML = '';
         document.querySelector('#db1').placeholder = 'Type in ingredient';
         document.querySelector('#exactminchoice').value = 'exact';
-        if (document.querySelector('#dbcustomchoice').value = 'custom')
+        if (document.querySelector('#dbcustomchoice').value == 'custom')
         {
             document.querySelector('#carbs1').placeholder = 'Carbs per portion (g)';
             document.querySelector('#carbs2').placeholder = 'Carbs per portion (g)';
@@ -29,7 +29,7 @@
         document.querySelector('#exactminchoice').value = 'min';
         document.querySelector('#preferred').innerHTML = "Type in the ingredient you want to eat the most of in the <b><u>leftmost field</b></u>.";
         document.querySelector('#db1').placeholder = "Preferred ingredient";
-        if (document.querySelector('#dbcustomchoice').value = 'custom')
+        if (document.querySelector('#dbcustomchoice').value == 'custom')
         {
             document.querySelector('#carbs1').placeholder = 'kcal per portion';
             document.querySelector('#carbs2').placeholder = 'kcal per portion';
@@ -69,13 +69,13 @@
             db[i].value = "";
         }
         document.querySelector('#dbcustomchoice').value = 'custom';
-        if (document.querySelector('#exactminchoice').value = 'min')
+        if (document.querySelector('#exactminchoice').value == 'min')
         {
             document.querySelector('#carbs1').placeholder = 'kcal per portion';
             document.querySelector('#carbs2').placeholder = 'kcal per portion';
             document.querySelector('#carbs3').placeholder = 'kcal per portion';
         }
-        else if (document.querySelector('#exactminchoice').value = 'exact')
+        else if (document.querySelector('#exactminchoice').value == 'exact')
         {
             document.querySelector('#carbs1').placeholder = 'Carbs per portion (g)';
             document.querySelector('#carbs2').placeholder = 'Carbs per portion (g)';
@@ -83,10 +83,6 @@
         }
     }
 
-    function displaydb()
-    {
-        TODO;
-    }
 </script>
 <script src="/static/foods.js"></script>
 <!-- Essa é a função de autocompletar a classe foods. Tenho que criar três botôes dessa classe pros casos de usar o banco de dados.-->    
