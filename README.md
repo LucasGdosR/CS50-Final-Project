@@ -1,5 +1,5 @@
 # MACROS INTO MEAL
-#### Video Demo: <URL HERE>
+#### Video Demo: https://www.youtube.com/watch?v=PGBLWWDwY8Q
 #### Description:
 ## What the Project *Is*
 "Macros into Meal" is a web-based application that ultimately tells the user how many grams of 3 different foods are needed to meet nutrition targets set by the user.
