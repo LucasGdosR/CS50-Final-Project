@@ -61,7 +61,7 @@ def index():
         fatstarget = int(request.form.get('fats'))
         # https://stackoverflow.com/questions/48966934/solve-a-system-of-linear-equations-and-linear-inequalities
         # P >= PT, F >= FT, kcal = kcalT, weights >= 0, weight1 max
-        coefficients_inequalities = [[-float(macros1[0][1]), -float(macros2[0][1]), -float(macros3[0][1])], [-float(macros1[0][2]), -float(macros2[0][2]), -float(macros3[0][2])]]  # require -1*x + -1*y <= -180
+        coefficients_inequalities = [[-float(macros1[0][1]), -float(macros2[0][1]), -float(macros3[0][1])], [-float(macros1[0][2]), -float(macros2[0][2]), -float(macros3[0][2])]]
         constants_inequalities = [-proteintarget, -fatstarget]
         coefficients_equalities = [[float(macros1[0][0]), float(macros2[0][0]), float(macros3[0][0])]]
         constants_equalities = [caloriestarget]
