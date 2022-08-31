@@ -12,7 +12,7 @@ cur = con.cursor()
 @app.route("/", methods=['GET', 'POST'])
 def index():
     # First access or return after result
-    if request.method == 'GET' or request.form.get('return') == True:
+    if request.method == 'GET' or request.form.get('return') == "Voltar":
         return render_template("index.html")
 
     # Use a multiple options input to determine which page to render next
@@ -21,11 +21,11 @@ def index():
         ingredient1 = request.form.get('db1')
         ingredient2 = request.form.get('db2')
         ingredient3 = request.form.get('db3')
-        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name = ?', (ingredient1,))
+        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name LIKE ?', (ingredient1,))
         macros1 = res.fetchall()
-        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name = ?', (ingredient2,))
+        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name LIKE ?', (ingredient2,))
         macros2 = res.fetchall()
-        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name = ?', (ingredient3,))
+        res = cur.execute('SELECT carb, prot, fat FROM taco WHERE name LIKE ?', (ingredient3,))
         macros3 = res.fetchall()
         carbstarget = int(request.form.get('carbs'))
         proteintarget = int(request.form.get('protein'))
@@ -40,21 +40,21 @@ def index():
         A_inverse = np.linalg.inv(A)
         X = A_inverse * B
         for i in range(3):
-            if X[i][0] < 0:
-                return('negative.html')
-            X[i][0] = round(float(X[i][0] * 100))
-        return render_template('dbexact.html', X=X, carbstarget=carbstarget, proteintarget=proteintarget, fatstarget=fatstarget, ingredient1=ingredient1, ingredient2=ingredient2, ingredient3=ingredient3)
+            if X[i] < 0:
+                return render_template('negative.html')
+            X[i] = round(float(X[i] * 100))
+        return render_template('dbexact.html', weight1=int(X[0]), weight2=int(X[1]), weight3=int(X[2]), carbstarget=carbstarget, proteintarget=proteintarget, fatstarget=fatstarget, ingredient1=ingredient1, ingredient2=ingredient2, ingredient3=ingredient3)
     
     # Calorie target using database
     elif request.form.get('exactminchoice') == 'min' and request.form.get('dbcustomchoice') == 'db':
         ingredient1 = request.form.get('db1')
         ingredient2 = request.form.get('db2')
         ingredient3 = request.form.get('db3')
-        res = cur.execute('SELECT kcal, prot, fat FROM taco WHERE name = ?', (ingredient1,))
+        res = cur.execute('SELECT kcal, prot, fat FROM taco WHERE name LIKE ?', (ingredient1,))
         macros1 = res.fetchall()
-        res = cur.execute('SELECT kcal, prot, fat FROM taco WHERE name = ?', (ingredient2,))
+        res = cur.execute('SELECT kcal, prot, fat FROM taco WHERE name LIKE ?', (ingredient2,))
         macros2 = res.fetchall()
-        res = cur.execute('SELECT kcal, prot, fat FROM taco WHERE name = ?', (ingredient3,))
+        res = cur.execute('SELECT kcal, prot, fat FROM taco WHERE name LIKE ?', (ingredient3,))
         macros3 = res.fetchall()
         caloriestarget = int(request.form.get('calories'))
         proteintarget = int(request.form.get('protein'))
@@ -93,9 +93,9 @@ def index():
         X = A_inverse * B
         for i in range(3):
             if X[i] < 0:
-                return('negative.html')
+                return render_template('negative.html')
             X[i] = round(float(X[i] * weight[i]))
-        return render_template('customexact.html', X=X, carbstarget=carbstarget, proteintarget=proteintarget, fatstarget=fatstarget)
+        return render_template('customexact.html', weight1=int(X[0]), weight2=int(X[1]), weight3=int(X[2]), carbstarget=carbstarget, proteintarget=proteintarget, fatstarget=fatstarget)
     
     # Calorie target with custom foods
     elif request.form.get('exactminchoice') == 'min' and request.form.get('dbcustomchoice') == 'custom':
@@ -122,4 +122,4 @@ def index():
 
     # If the options aren't selected
     else:
-        return flash('Invalid input. Make sure to select an option: 1) database or custom foods; and 2) exact macros or minimum targets')
+        return render_template('options.html')
