@@ -10,13 +10,13 @@
         document.querySelector('#calories').type = "hidden";
         document.querySelector('#calories').value = "";
         document.querySelector('#preferred').innerHTML = '';
-        document.querySelector('#db1').placeholder = 'Type in ingredient';
+        document.querySelector('#db1').placeholder = 'Insira um alimento';
         document.querySelector('#exactminchoice').value = 'exact';
         if (document.querySelector('#dbcustomchoice').value == 'custom')
         {
-            document.querySelector('#carbs1').placeholder = 'Carbs per portion (g)';
-            document.querySelector('#carbs2').placeholder = 'Carbs per portion (g)';
-            document.querySelector('#carbs3').placeholder = 'Carbs per portion (g)';
+            document.querySelector('#carbs1').placeholder = 'Carb por porção (g)';
+            document.querySelector('#carbs2').placeholder = 'Carb por porção (g)';
+            document.querySelector('#carbs3').placeholder = 'Carb por porção (g)';
         }
     }
     
@@ -27,13 +27,13 @@
         document.querySelector('#carbs').type = "hidden";
         document.querySelector('#carbs').value = "";
         document.querySelector('#exactminchoice').value = 'min';
-        document.querySelector('#preferred').innerHTML = "Type in the ingredient you want to eat the most of in the <b><u>leftmost field</b></u>.";
-        document.querySelector('#db1').placeholder = "Preferred ingredient";
+        document.querySelector('#preferred').innerHTML = "Insira o ingrediente que você prefere comer mais no <u>campo mais à esquerda</u>.";
+        document.querySelector('#db1').placeholder = "Ingrediente preferido";
         if (document.querySelector('#dbcustomchoice').value == 'custom')
         {
-            document.querySelector('#carbs1').placeholder = 'kcal per portion';
-            document.querySelector('#carbs2').placeholder = 'kcal per portion';
-            document.querySelector('#carbs3').placeholder = 'kcal per portion';
+            document.querySelector('#carbs1').placeholder = 'kcal por porção';
+            document.querySelector('#carbs2').placeholder = 'kcal por porção';
+            document.querySelector('#carbs3').placeholder = 'kcal por porção';
         }
     }
     
@@ -52,6 +52,7 @@
                 custom[i].value = '';
             }
         document.querySelector('#dbcustomchoice').value = 'db';
+        document.querySelector('#dummies').innerHTML = "Escreva o nome do alimento <u>exatamente igual</u> às opções. Não funciona se não escrever o nome completo.";
     }
     
     // This function makes the inputs for custom ingredient macros visible once the 'custom' option has been selected
@@ -71,98 +72,128 @@
         document.querySelector('#dbcustomchoice').value = 'custom';
         if (document.querySelector('#exactminchoice').value == 'min')
         {
-            document.querySelector('#carbs1').placeholder = 'kcal per portion';
-            document.querySelector('#carbs2').placeholder = 'kcal per portion';
-            document.querySelector('#carbs3').placeholder = 'kcal per portion';
+            document.querySelector('#carbs1').placeholder = 'kcal por porção';
+            document.querySelector('#carbs2').placeholder = 'kcal por porção';
+            document.querySelector('#carbs3').placeholder = 'kcal por porção';
         }
         else if (document.querySelector('#exactminchoice').value == 'exact')
         {
-            document.querySelector('#carbs1').placeholder = 'Carbs per portion (g)';
-            document.querySelector('#carbs2').placeholder = 'Carbs per portion (g)';
-            document.querySelector('#carbs3').placeholder = 'Carbs per portion (g)';
+            document.querySelector('#carbs1').placeholder = 'Carb por porção (g)';
+            document.querySelector('#carbs2').placeholder = 'Carb por porção (g)';
+            document.querySelector('#carbs3').placeholder = 'Carb por porção (g)';
         }
+        document.querySelector('#dummies').innerHTML = '';
     }
 
 </script>
-<script src="/static/foods.js"></script>
-<!-- Essa é a função de autocompletar a classe foods. Tenho que criar três botôes dessa classe pros casos de usar o banco de dados.-->    
+<script src="/static/foods.js"> // This is the autocomplete function along with a list matching the database    
+</script>
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                <h1>Bem vindo a <b>Macros into Meal</b></h3>
+                <h5>a calculadora de refeições do <a href='https://www.youtube.com/c/MarombeiroCientista'>Marombeiro Cientista</a></h6>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">
+                <h3><u>Instruções:</u></h5>
+                <p class="">Escolha uma funcionalidade:</p>
+                <ul class="">
+                    <li>Especificar alvos exatos de carboidratos, proteínas e gorduras; OU</li>
+                    <li>Especificar um mínimo de proteína e gordura, um alvo exato de calorias, e uma comida preferida dentre as três.</li>
+                </ul>
+                <hr>
+                <p class="">Escolha um banco de dados:</p>
+                <ul class="">
+                    <li>Tabela TACO (Tabela Brasileira de Composição de Alimentos, exportada de <a href='https://www.kaggle.com/datasets/ispangler/composio-nutricional-de-alimentos-taco?resource=download&select=taco-db-nutrientes.csv'>kaggle</a>); OU</li>
+                    <li>Informação nutricional customizada informada por você.</li>
+                </ul>
+                <hr>
+                <p class="">Escolha 3 ingredientes, preferencialmente um rico em proteína, um rico em gordura, e um rico em carboidratos. É só isso!</p>
+            </th>
+        </tr>
+        <tr>
+            <th scope="row">
+                <form class="" action="/" method="post">
+                    <!--These inputs tell the backend which choices were made-->
+                    <input type="hidden" id="exactminchoice" name="exactminchoice" value="">
+                    <input type="hidden" id="dbcustomchoice" name="dbcustomchoice" value="">
+                
+                    <div>
+                        <input type="radio" id="exactradio" name="exact/min" value="exact" onclick="exactselected()">
+                        <label for="exact">Macros exatos</label>
+                
+                        <input type="radio" id="minradio" name="exact/min" value="min" onclick="minselected()">
+                        <label for="min">Proteína e gordura mínima, calorias exatas</label>
+                    </div>
+                    <div>
+                        <input type="hidden" id="carbs" name="carbs" placeholder="Carboidrato" autocomplete="off">
+                        <input type="hidden" id="calories" name="calories" placeholder="Calorias" autocomplete="off">
+                        <input type="hidden" id="protein" name="protein" placeholder="Proteína" autocomplete="off">
+                        <input type="hidden" id="fats" name="fats" placeholder="Gordura" autocomplete="off">
+                    </div>
+                    <div>
+                        <input type="radio" id="dbradio" name="db/custom" value="db" onclick="dbselected()">
+                        <label for="db">Tabela TACO</label>
+                
+                        <input type="radio" id="customradio" name="db/custom" value="custom" onclick="customselected()">
+                        <label for="custom">Ingredientes customizados</label>
+                    </div>
+                    <div>
+                        <p id="dummies"></p>
+                        <p id="preferred"></p>
 
+                        <input type="hidden" class="db ui-widget" id="db1" name="db1" autocomplete="off">
+                        <input type="hidden" class="db ui-widget" id="db2" name="db2" placeholder="Insira um alimento" autocomplete="off">
+                        <input type="hidden" class="db ui-widget" id="db3" name="db3" placeholder="Insira um alimento" autocomplete="off">
 
-<h3>Welcome to <b>Macros into Meal</b>!</h3>
-<h5><u>Instructions:</u></h5>
-<p class="">Choose which functionality you want:</p>
-<ul class="">
-    <li>Specifying exact macro targets for carbs, protein, and fats; OR</li>
-    <li>Specifying minimum protein and fat targets, with an exact calorie target, and a preferred ingredient.</li>
-</ul>
-<p class="">Choose a database:</p>
-<ul class="">
-    <li>Default database TACO (exported from <a href='https://www.kaggle.com/datasets/ispangler/composio-nutricional-de-alimentos-taco?resource=download&select=taco-db-nutrientes.csv'>kaggle</a>); OR</li>
-    <li>Custom foods provided by you.</li>
-</ul>
-<p class="">Choose 3 ingredients, preferrably one rich in protein, one rich in fats, and one rich in carbohydrates. That's it!</p>
-<form class="" action="/" method="post">
-    <!--These inputs tell the backend which choices were made-->
-    <input type="hidden" id="exactminchoice" name="exactminchoice" value="">
-    <input type="hidden" id="dbcustomchoice" name="dbcustomchoice" value="">
-    
-    <div>
-        <input type="radio" id="exactradio" name="exact/min" value="exact" onclick="exactselected()">
-        <label for="exact">Exact targets</label>
-    
-        <input type="radio" id="minradio" name="exact/min" value="min" onclick="minselected()">
-        <label for="min">Minimum macros and calorie target</label>
-    </div>
-    <div>
-        <input type="hidden" id="carbs" name="carbs" placeholder="Carbs" autocomplete="off">
-        <input type="hidden" id="calories" name="calories" placeholder="Calories" autocomplete="off">
-        <input type="hidden" id="protein" name="protein" placeholder="Protein" autocomplete="off">
-        <input type="hidden" id="fats" name="fats" placeholder="Fats" autocomplete="off">
-    </div>
-    <div>
-        <input type="radio" id="dbradio" name="db/custom" value="db" onclick="dbselected()">
-        <label for="db">Default database</label>
-    
-        <input type="radio" id="customradio" name="db/custom" value="custom" onclick="customselected()">
-        <label for="custom">Custom ingredients</label>
-    </div>
-    <div>
-        <p id="preferred"></p>
-
-        <input type="hidden" class="db" id="db1" name="db1" autocomplete="off">
-        <input type="hidden" class="db" id="db2" name="db2" placeholder="Type in ingredient" autocomplete="off">
-        <input type="hidden" class="db" id="db3" name="db3" placeholder="Type in ingredient" autocomplete="off">
-
-        <input type="hidden" class="custom" id="weight1" name="weight1" placeholder="Portion size (grams)" autocomplete="off">
-        <input type="hidden" class="custom" id="weight2" name="weight2" placeholder="Portion size (grams)" autocomplete="off">
-        <input type="hidden" class="custom" id="weight3" name="weight3" placeholder="Portion size (grams)" autocomplete="off">
-    </div>
-    <div>
-        <input type="hidden" class="custom" id="carbs1" name="carbs1" placeholder="Carbs per portion (g)" autocomplete="off">
-        <input type="hidden" class="custom" id="carbs2" name="carbs2" placeholder="Carbs per portion (g)" autocomplete="off">
-        <input type="hidden" class="custom" id="carbs3" name="carbs3" placeholder="Carbs per portion (g)" autocomplete="off">
-    </div>
-    <div>
-        <input type="hidden" class="custom" id="protein1" name="protein1" placeholder="Protein per portion (g)" autocomplete="off">
-        <input type="hidden" class="custom" id="protein2" name="protein2" placeholder="Protein per portion (g)" autocomplete="off">
-        <input type="hidden" class="custom" id="protein3" name="protein3" placeholder="Protein per portion (g)" autocomplete="off">
-    </div>
-        <input type="hidden" class="custom" id="fats1" name="fats1" placeholder="Fats per portion (g)" autocomplete="off">
-        <input type="hidden" class="custom" id="fats2" name="fats2" placeholder="Fats per portion (g)" autocomplete="off">
-        <input type="hidden" class="custom" id="fats3" name="fats3" placeholder="Fats per portion (g)" autocomplete="off">
-    </div>
-    <div>
-        <input type="submit" value="Turn macros into meal!">
-    </div>
-</form>
-
-<h4>FAQ</h4>
-<h6>Why 3 ingredients?</h6>
-<p>Turning macros into meals is akin to solving linear systems. Since we have 3 targets, we need 3 variables to have an unique solution. If would not be possible to have a solution with only 2 ingredients, and there would be an infinite number of solutions with more than 3 ingredients.</p>
-<h6>Why have an ingredient rich in each macronutrient?</h6>
-<p>This is not required. However, it makes it more likely that it is possible to reach your macro targets. If your 3 ingredients are rice, potatoes and pasta, which are all carbohydrate rich foods, it likely won't be possible to reach protein or fat targets. Having an ingredient rich in each macronutrient makes it more likely that the macro targets are achievable with the selected ingredients.</p>
-<h6>Why minimum protein and fat targets and a fixed calorie target?</h6>
-<p>Protein and fats are essential nutrients, meaning they cannot be synthethized by the body, and must be ingested. A minimal intake of protein and fats is a necessity. Past that minimal threshold, counting only calories, regardless of the macronutrient, allows for greater flexibility. Choosing this option allows you to eat as much as possible of the food you want to eat the most of while still hitting your targets.</p>
-<h6>I want to use more than 3 ingredients!</h6>
-<p>There's a way around it. First come up with a recipe. Then, figure out the nutrition information from that recipe by adding up everything from all ingredients. Use that as a custom food. For example, if you want to eat homemade mac 'n' cheese, chicken breast, and apples. Decide which recipe you'll use for the mac 'n' cheese. Let's say it's 100g of pasta, 50g of american cheese, and 10g of butter. Add up the nutrition facts for all of those, [PLACEHOLDER]</p>
+                        <input type="hidden" class="custom" id="weight1" name="weight1" placeholder="Tamanho da porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="weight2" name="weight2" placeholder="Tamanho da porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="weight3" name="weight3" placeholder="Tamanho da porção (g)" autocomplete="off">
+                    </div>
+                    <div>
+                        <input type="hidden" class="custom" id="carbs1" name="carbs1" placeholder="Carb por porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="carbs2" name="carbs2" placeholder="Carb por porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="carbs3" name="carbs3" placeholder="Carb por porção (g)" autocomplete="off">
+                    </div>
+                    <div>
+                        <input type="hidden" class="custom" id="protein1" name="protein1" placeholder="Proteína por porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="protein2" name="protein2" placeholder="Proteína por porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="protein3" name="protein3" placeholder="Proteína por porção (g)" autocomplete="off">
+                    </div>
+                        <input type="hidden" class="custom" id="fats1" name="fats1" placeholder="Gordura por porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="fats2" name="fats2" placeholder="Gordura por porção (g)" autocomplete="off">
+                        <input type="hidden" class="custom" id="fats3" name="fats3" placeholder="Gordura por porção (g)" autocomplete="off">
+                    </div>
+                    <div>
+                        <input type="submit" value="Transformar macros em refeição!">
+                    </div>
+                </form>
+            </th>
+        </tr>
+        <tr>
+            <th scope="row">
+                <h3>F.A.Q.</h3>
+                <h5>Por que 3 ingredientes?</h5>
+                <p>Transformar macros em refeições é como solucionar um sistema linear. Como temos 3 alvos (ou 3 equações), precisamos de 3 variáveis para ter uma solução única. Não existiria solução com apenas 2 ingredientes, e haveria infinitas soluções com 4 ou mais ingredientes.</p>
+                <hr>
+                <h5>Por que inserir um alimento rico em cada macronutriente?</h5>
+                <p>Isto não é necessário. Ainda assim, isso torna mais provável que seja possível atingir seus alvos de macros. Se os 3 ingredientes são arroz, batata e macarrão, que são todos ricos em carboidratos, é pouco provável que seja possível bater seus alvos de proteína e gordura. Ter um ingrediente rico em cada macronutriente torna mais provável que exista uma solução pro sistema de equações.</p>
+                <hr>
+                <h5>Por que usar um mínimo de proteína e de gordura, e um alvo exato de calorias?</h5>
+                <p>Proteína e gordura são nutrientes essenciais, ou seja, que não podem ser produzidos pelo corpo, e têm que ser ingeridos. Uma ingestão mínima deles é necessária. A partir de um certo ponto, não faz muita diferença se a ingestão de energia vem de proteína, gordura, ou carboidratos. A ideia dessa opção é atingir esse mínimo e depois comer com mais flexibilidade de acordo com sua preferência.</p>
+                <hr>
+                <h5>Só quero contar calorias e proteína!</h5>
+                <p> Dá pra fazer. É só usar a opção de mínimos, e colocar que o mínimo de gordura é zero.</p>
+                <hr>
+                <h5>Quero usar mais de 3 ingredientes!</h5>
+                <p>Também dá pra fazer. Primeiro, crie uma receita. Depois, calcule a informação nutricional da receita (igual fazem em blogs). Com esses dados, você escolhe a opção de inserir seus dados ao invés de usar a tabela TACO, e coloca os dados da receita em um dos campos. Se você coloca uma receita de frango à parmegiana, que tem frango, farinha, ovo, óleo, queijo, e molho de tomate, de repente já são 6 ingredientes em um campo, fora os outros 2 ingredientes, que podem inclusive ser de outras receitas.</p>
+            </th>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}
