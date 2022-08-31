@@ -68,7 +68,9 @@ There're also the boundaries, which require that the weights are non-negative, a
 
 That's all there is to it. Rendering pages, getting the user's input, fetching data from the database, solving linear systems or linear optimization, and returning the solution to the page via JS.
 
-### HTML and CSS: shallow dive
+### SQL, HTML and CSS: shallow dive
+I imported a .csv file into a sqlite3 database. Since the only query is based on the "name" column, I created an index for that column, speeding up the queries.
+
 HTML and CSS were used in a simple fashion, using a table to format the whole website. The elegant "table-dark" class was used from Bootstrap, along with "table-hover" to make the sections of the site better separated. The horizontal rule tag also aided in this organization.
 
 Other than that, CSS was used to make the couple lists used more pretty, the whole background dark, and some text white.
